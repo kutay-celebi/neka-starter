@@ -18,8 +18,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.PrePersist;
 import javax.persistence.PreRemove;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -56,12 +54,10 @@ public class NekaEntity implements Serializable {
     private String createdBy;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
@@ -74,7 +70,6 @@ public class NekaEntity implements Serializable {
     private Long version;
 
     @Column(name = "DELETED_AT")
-    @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime deletedAt;
 
     @Column(name = "DELETED")
