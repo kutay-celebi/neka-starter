@@ -61,9 +61,8 @@
       }
     ],
     [
-      "@saithodev/semantic-release-gitea",
-      {"giteaUrl": "http://gitea.nekasoft.com.tr", "giteaApiPathPrefix": "/api/v1"}
+      "@semantic-release/github"
     ]
   ],
-  "repositoryUrl": "http://gitea.nekasoft.com.tr/NeKaSoft/eburs-api.git"
+  "repositoryUrl": "https://github.com/kutay-celebi/neka-starter.git"
 }

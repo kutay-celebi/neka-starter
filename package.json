@@ -1,17 +1,17 @@
 {
   "private"        : true,
   "scripts"        : {
-    "semantic-preview": "set GITEA_PREFIX=/api/v1 && set GITEA_TOKEN=5be926ce4a225017b2605a3f7c8694493fef1bc7 && semantic-release --no-ci --dry-run",
-    "semantic-dev"    : "set GITEA_PREFIX=/api/v1 && set GITEA_TOKEN=5be926ce4a225017b2605a3f7c8694493fef1bc7 && semantic-release --no-ci"
+    "semantic-preview": "SET GITHUB_TOKEN=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 && semantic-release --no-ci --dry-run",
+    "semantic-dev"    : "semantic-release --no-ci"
   },
-  "repository"     : "http://gitea.nekasoft.com.tr/NeKaSoft/eburs-api.git",
   "devDependencies": {
-    "semantic-release"                          : "^18.0.0",
-    "@saithodev/semantic-release-gitea"         : "^2.1.0",
     "@semantic-release/changelog"               : "^6.0.1",
     "@semantic-release/commit-analyzer"         : "^9.0.1",
     "@semantic-release/git"                     : "^10.0.1",
+    "@semantic-release/github"                  : "^8.0.2",
     "@semantic-release/release-notes-generator" : "^10.0.2",
-    "conventional-changelog-conventionalcommits": "^4.6.1"
+    "conventional-changelog-conventionalcommits": "^4.6.1",
+    "dotenv"                                    : "^15.0.0",
+    "semantic-release"                          : "^18.0.0"
   }
 }
