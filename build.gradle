@@ -6,7 +6,7 @@ ext {
     nekaJwtVersion = "1.0.1"
     nekaCommonVersion = "1.0.1"
     nekaServiceVersion = "1.0.0"
-    nekaDataJpaVersion = "1.0.1"
+    nekaDataJpaVersion = "1.0.2"
 
     jacksonVersion = "2.12.+"
     lombokVersion = "1.18.+"
