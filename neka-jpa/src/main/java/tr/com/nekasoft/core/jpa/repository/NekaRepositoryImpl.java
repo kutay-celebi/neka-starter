@@ -147,16 +147,18 @@ public class NekaRepositoryImpl<KE extends NekaEntity> extends SimpleJpaReposito
 
     @Transactional(readOnly = true)
     @Override
-    public NekaPage<KE> findAll(Predicate predicate, Pageable pageable) {
+    public NekaPage<KE> findAll(Predicate predicate, NekaQueryModel nekaQueryModel) {
 
-        Assert.notNull(pageable, "Pageable must not be null!");
+        Assert.notNull(nekaQueryModel, "Pageable must not be null!");
+
+        Pageable pageable = PageableConverter.toPageable(nekaQueryModel);
 
         final JPAQuery<KE> countQuery = createQuery(predicate);
 
         JPAQuery<KE> query = (JPAQuery<KE>) querydsl.applyPagination(pageable, countQuery);
         if (pageable.getSort().isUnsorted()) {
-            return ExecutionUtils.getPage(executeSorted(query, Sort.by(Sort.Direction.DESC, NekaEntity.CREATED_FIELD)),
-                                          pageable, countQuery::fetchCount);
+            return ExecutionUtils.getPage(executeSorted(query, Sort.by(Sort.Direction.DESC, NekaEntity.CREATED_FIELD)), pageable,
+                                          countQuery::fetchCount);
         }
         return ExecutionUtils.getPage(query.fetch(), pageable, countQuery::fetchCount);
     }
@@ -260,8 +262,8 @@ public class NekaRepositoryImpl<KE extends NekaEntity> extends SimpleJpaReposito
         // Date.class),
         //                                                  OrderSpecifier.NullHandling.NullsLast);
         //defaultQueryMetadata.addOrderBy(order);
-        defaultQueryMetadata.addWhere(builder.getBoolean(NekaEntity.DELETED_FIELD).isNull()
-                                              .or(builder.getBoolean(NekaEntity.DELETED_FIELD).isFalse()));
+        defaultQueryMetadata.addWhere(
+                builder.getBoolean(NekaEntity.DELETED_FIELD).isNull().or(builder.getBoolean(NekaEntity.DELETED_FIELD).isFalse()));
         JPAQuery<KE> query = new JPAQuery<>(em, defaultQueryMetadata);
         query.from(this.path);
         query.where(predicate);
@@ -294,8 +296,8 @@ public class NekaRepositoryImpl<KE extends NekaEntity> extends SimpleJpaReposito
         // Date.class),
         //                                                  OrderSpecifier.NullHandling.NullsLast);
         //defaultQueryMetadata.addOrderBy(order);
-        defaultQueryMetadata.addWhere(builder.getBoolean(NekaEntity.DELETED_FIELD).isNull()
-                                              .or(builder.getBoolean(NekaEntity.DELETED_FIELD).isFalse()));
+        defaultQueryMetadata.addWhere(
+                builder.getBoolean(NekaEntity.DELETED_FIELD).isNull().or(builder.getBoolean(NekaEntity.DELETED_FIELD).isFalse()));
         JPAQuery<KE> query = new JPAQuery<>(em, defaultQueryMetadata);
         query.from(this.path);
         query.where(builder.getString(NekaEntity.ID_FIELD).eq(s));

@@ -2,7 +2,6 @@ package tr.com.nekasoft.core.jpa.repository;
 
 import com.querydsl.core.types.Predicate;
 import com.querydsl.jpa.impl.JPAQuery;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.Querydsl;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
@@ -40,7 +39,7 @@ public interface NekaRepository<KE extends NekaEntity> extends Repository<KE, St
 
     Optional<KE> findOne(Predicate predicate);
 
-    NekaPage<KE> findAll(Predicate predicate, Pageable pageable);
+    NekaPage<KE> findAll(Predicate predicate, NekaQueryModel pageable);
 
     <T> NekaPage<T>  applyPagination(NekaQueryModel queryModel, JPAQuery<T> query);
 

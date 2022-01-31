@@ -17,6 +17,7 @@ repositories {
 
 dependencies {
     implementation platform(project(":neka-platform"))
+    api project(':neka-common')
 
     api "io.jsonwebtoken:jjwt"
     implementation "org.springframework.boot:spring-boot-starter-web"
