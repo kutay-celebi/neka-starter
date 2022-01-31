@@ -25,5 +25,31 @@ subprojects {
         }
     }
 
+    def gprusr
+    def gprkey
+    def githubProperties = new Properties()
+    def file = rootProject.file("github.properties")
+    if (file.exists()) {
+        githubProperties.load(new FileInputStream(file))
+        gprusr = githubProperties["gprusr"]
+        gprkey = githubProperties["gprkey"]
+    } else {
+        gprusr = System.getenv("GITHUB_USERNAME")
+        gprkey = System.getenv("GITHUB_TOKEN")
+    }
+
+
+    publishing {
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/kutay-celebi/neka-starter")
+                credentials {
+                    username = gprusr
+                    password = gprkey
+                }
+            }
+        }
+    }
 
 }
