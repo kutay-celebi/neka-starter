@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import tr.com.nekasoft.core.jpa.bean.NekaAuditorAware;
 import tr.com.nekasoft.core.jpa.configuration.property.NekaAuditProperty;
 
 /**
@@ -17,8 +18,8 @@ import tr.com.nekasoft.core.jpa.configuration.property.NekaAuditProperty;
 public class NekaJpaConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "neka.jpa.audit", name = "enable")
-    public NekaAuditProperty nekaAuditorAware() {
-        return new NekaAuditProperty();
+    public NekaAuditorAware nekaAuditorAware() {
+        return new NekaAuditorAware();
     }
 }
 
