@@ -34,8 +34,8 @@ subprojects {
         gprusr = githubProperties["gprusr"]
         gprkey = githubProperties["gprkey"]
     } else {
-        gprusr = System.getenv("GITHUB_USERNAME")
-        gprkey = System.getenv("GITHUB_TOKEN")
+        gprusr = System.getenv("NEKA_STARTER_GITHUB_USERNAME")
+        gprkey = System.getenv("NEKA_STARTER_GITHUB_TOKEN")
     }
 
 
