@@ -1,0 +1,35 @@
+plugins {
+    id "java-platform"
+    id "maven"
+}
+
+group "com.kuartz.core"
+version "1.0.0"
+
+javaPlatform {
+    allowDependencies()
+}
+
+
+dependencies {
+    api platform(project(":neka-platform"))
+
+    constraints {
+        api project(":neka-common")
+        api project(":neka-service")
+        api project(":neka-jpa")
+        api project(":neka-jwt")
+    }
+
+    // constraints {
+    // }
+
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.javaPlatform
+        }
+    }
+}

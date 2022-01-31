@@ -1,0 +1,76 @@
+version "${nekaServiceVersion}"
+
+apply plugin: "idea"
+apply plugin: "maven"
+apply plugin: "java-library"
+apply plugin: "wrapper"
+apply plugin: "jacoco"
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    implementation platform(project(":neka-platform"))
+    implementation project(":neka-common")
+
+    api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+}
+
+test {
+    useJUnitPlatform()
+
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+
+    executionData(fileTree(dir: "$buildDir/jacoco", include: '*.exec'))
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                     //          exclude: ['**/entity/query/**', '**/security/**', '**/converter/**', '**/constants/**', '**/config/**', '**/mapper/**', '**/*Application*', '**/entity/Q*']
+            )
+        }))
+    }
+}
+
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = "Neka Service"
+                description = "Neka Service java library"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "celebikutay"
+                        name = "Kutay Çelebi"
+                        email = "mail@kutaycelebi.com"
+                    }
+                }
+            }
+        }
+    }
+}

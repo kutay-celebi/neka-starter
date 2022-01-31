@@ -1,0 +1,6 @@
+neka:
+  rest:
+    baseUrl: http://testuri
+    map:
+      testapi:
+        baseUrl: http://testapiuri

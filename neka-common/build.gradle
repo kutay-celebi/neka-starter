@@ -1,0 +1,82 @@
+version "${nekaCommonVersion}"
+
+apply plugin: "idea"
+apply plugin: "maven"
+apply plugin: "java-library"
+apply plugin: "wrapper"
+apply plugin: "jacoco"
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":neka-platform"))
+
+    api "com.fasterxml.jackson.core:jackson-core"
+    api "com.fasterxml.jackson.core:jackson-core"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+
+    api "org.apache.commons:commons-lang3"
+    api "org.apache.commons:commons-text"
+    api "org.apache.commons:commons-collections4"
+    api "javax.validation:validation-api"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+}
+
+
+test {
+    useJUnitPlatform()
+
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+
+    executionData(fileTree(dir: "$buildDir/jacoco", include: '*.exec'))
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                     //          exclude: ['**/entity/query/**', '**/security/**', '**/converter/**', '**/constants/**', '**/config/**', '**/mapper/**', '**/*Application*', '**/entity/Q*']
+            )
+        }))
+    }
+}
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = "Neka Common"
+                description = "Neka Common java library"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "celebikutay"
+                        name = "Kutay Çelebi"
+                        email = "mail@kutaycelebi.com"
+                    }
+                }
+            }
+        }
+    }
+}

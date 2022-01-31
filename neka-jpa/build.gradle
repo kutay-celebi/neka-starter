@@ -1,0 +1,88 @@
+version "${nekaDataJpaVersion}"
+
+apply plugin: "idea"
+apply plugin: "maven"
+apply plugin: "java-library"
+apply plugin: "wrapper"
+apply plugin: "jacoco"
+
+java {
+    withSourcesJar()
+    withJavadocJar()
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform(project(":neka-platform"))
+    implementation project(":neka-common")
+
+    api "com.querydsl:querydsl-core"
+    api "com.querydsl:querydsl-jpa"
+
+    api "org.springframework.boot:spring-boot-starter-data-jpa"
+    api "org.springframework.security:spring-security-core"
+
+    api "com.fasterxml.jackson.core:jackson-annotations"
+
+    annotationProcessor(
+            "com.querydsl:querydsl-apt:5.0.0:jpa",
+            [group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api", version: "1.0.2.Final"],
+            [group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"]
+    )
+
+    compileOnly "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+
+test {
+    useJUnitPlatform()
+
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+
+    executionData(fileTree(dir: "$buildDir/jacoco", include: "*.exec"))
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                     //          exclude: ["**/entity/query/**", "**/security/**", "**/converter/**", "**/constants/**", "**/config/**", "**/mapper/**", "**/*Application*", "**/entity/Q*"]
+            )
+        }))
+    }
+}
+
+
+
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            pom {
+                name = "Neka JPA"
+                description = "Neka JPA java library"
+                licenses {
+                    license {
+                        name = "The Apache License, Version 2.0"
+                        url = "http://www.apache.org/licenses/LICENSE-2.0.txt"
+                    }
+                }
+                developers {
+                    developer {
+                        id = "celebikutay"
+                        name = "Kutay Çelebi"
+                        email = "mail@kutaycelebi.com"
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,43 @@
+plugins {
+    id "java-platform"
+    id "maven"
+    id "org.springframework.boot" version "${springBootVersion}"
+}
+
+
+version "1.0.0"
+
+javaPlatform {
+    allowDependencies()
+}
+
+dependencies {
+
+    api platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    constraints {
+        api("com.querydsl:querydsl-core:5.0.+",
+            "com.querydsl:querydsl-jpa:5.0.+",
+
+            "io.jsonwebtoken:jjwt:0.9.1",
+            "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
+            "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1",
+
+
+            "org.apache.commons:commons-lang3:3.11",
+            "org.apache.commons:commons-text:1.9",
+            "org.apache.commons:commons-collections4:4.4",
+
+            "javax.validation:validation-api:2.0.0.Final",
+            "org.projectlombok:lombok:${lombokVersion}")
+    }
+
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.javaPlatform
+        }
+    }
+}

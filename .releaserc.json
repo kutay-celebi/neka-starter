@@ -1,0 +1,69 @@
+{
+  "branches"     : [
+    "master",
+    {"name": "dev", "prerelease": true}
+  ],
+  "plugins"      : [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset"      : "conventionalcommits",
+        "releaseRules": [
+          {"breaking": true, "release": "major"},
+          {"type": "feature", "release": "minor"},
+          {"type": "fix", "release": "patch"},
+          {"type": "perf", "release": "patch"},
+          {"type": "tweak", "release": "patch"},
+          {"type": "style", "release": "patch"}
+        ],
+        "parserOpts"  : {
+          "noteKeywords": [
+            "BREAKING",
+            "BREAKING CHANGE",
+            "BREAKING CHANGES"
+          ]
+        },
+        "presetConfig": {
+          "types": [
+            {"type": "feature", "section": "Features"},
+            {"type": "fix", "section": "Bug Fixes"},
+            {"type": "perf", "section": "Improvements"},
+            {"type": "tweak", "section": "Improvements"},
+            {"type": "style", "section": "UI Improvements"}
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset"      : "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            {"type": "feature", "section": "Features"},
+            {"type": "fix", "section": "Bug Fixes"},
+            {"type": "perf", "section": "Improvements"},
+            {"type": "tweak", "section": "Improvements"},
+            {"type": "style", "section": "UI Improvements"}
+          ]
+        }
+      }
+    ],
+    [
+      "@semantic-release/changelog",
+      {"changelogFile": "CHANGELOG.md"}
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets" : "CHANGELOG.md",
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    [
+      "@saithodev/semantic-release-gitea",
+      {"giteaUrl": "http://gitea.nekasoft.com.tr", "giteaApiPathPrefix": "/api/v1"}
+    ]
+  ],
+  "repositoryUrl": "http://gitea.nekasoft.com.tr/NeKaSoft/eburs-api.git"
+}
