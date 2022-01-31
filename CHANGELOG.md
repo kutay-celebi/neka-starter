@@ -1,3 +1,21 @@
+## [1.1.0](https://github.com/kutay-celebi/neka-starter/compare/1.0.1...1.1.0) (2022-01-31)
+
+
+### Features
+
+* init jwt module ([ce7d9fd](https://github.com/kutay-celebi/neka-starter/commit/ce7d9fdf82707f3763d4796fd533dcb7fd05aa79))
+
+
+### Bug Fixes
+
+* neka entity timestamp has removed ([ec3e14c](https://github.com/kutay-celebi/neka-starter/commit/ec3e14ce9fe774138ab37a14b4401cb09ae9e217))
+
+
+### Improvements
+
+* adjusting neka repository ([4c6321f](https://github.com/kutay-celebi/neka-starter/commit/4c6321f0d9290f44cf27046b50be9d6862a065a0))
+* init model converter ([947328a](https://github.com/kutay-celebi/neka-starter/commit/947328a994983bea70a43e1638af207220ee817f))
+
 ### [1.0.1](https://github.com/kutay-celebi/neka-starter/compare/v1.0.0...1.0.1) (2022-01-31)
 
 
