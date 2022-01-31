@@ -1,10 +1,10 @@
 plugins {
     id "java-platform"
     id "maven"
+    id "com.palantir.git-version" version "0.13.0"
 }
-
-group "com.kuartz.core"
-version "1.0.0"
+def details = versionDetails()
+version details.lastTag
 
 javaPlatform {
     allowDependencies()

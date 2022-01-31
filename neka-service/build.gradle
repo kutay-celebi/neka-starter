@@ -23,7 +23,7 @@ dependencies {
     api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 
     compileOnly 'org.projectlombok:lombok'
-    annotationProcessor "org.projectlombok:lombok"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
