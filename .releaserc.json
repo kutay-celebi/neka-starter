@@ -64,5 +64,6 @@
       "@semantic-release/github"
     ]
   ],
+  "tagFormat": "${version}",
   "repositoryUrl": "https://github.com/kutay-celebi/neka-starter.git"
 }
