@@ -1,8 +1,10 @@
 package tr.com.nekasoft.core.jpa.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,6 +33,8 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @MappedSuperclass
 @EqualsAndHashCode
+@NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class NekaEntity implements Serializable {
 
@@ -39,9 +43,6 @@ public class NekaEntity implements Serializable {
     public static final String CREATED_FIELD = "createdAt";
     public static final String DELETED_AT_FIELD = "deletedAt";
     private static final long serialVersionUID = 402199730764879680L;
-
-    public NekaEntity() {
-    }
 
     @Id
     @GeneratedValue(generator = "UUID")
