@@ -19,7 +19,6 @@ dependencies {
     implementation platform(project(":neka-platform"))
 
     api "com.fasterxml.jackson.core:jackson-core"
-    api "com.fasterxml.jackson.core:jackson-core"
     api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
 
     api "org.apache.commons:commons-lang3"

@@ -1,6 +1,7 @@
 package tr.com.nekasoft.core.common.exception;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -22,10 +23,12 @@ public class BaseExceptionMessage {
     /**
      * Exceptionun tarihidir.
      */
+    @Builder.Default
     private final LocalDateTime date = LocalDateTime.now();
     /**
      * Exceptionun kolay trace edilmesi amaciyla her bir exceptiona tekil bir numara verilir.
      */
+    @Builder.Default
     private final String uuid = UUID.randomUUID().toString();
 
     private Map<String, Object> exceptionArguments;
