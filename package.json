@@ -3,7 +3,7 @@
   "scripts": {
     "semantic-preview": "env-cmd -f .env.github semantic-release --no-ci --dry-run",
     "semantic-dev": "env-cmd -f .env.github semantic-release --no-ci",
-    "publish": "env-cmd -f .env.github semantic-release"
+    "semantic-ci": "env-cmd -f .env.github semantic-release"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.1",
