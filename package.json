@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "semantic-preview": "env-cmd -f .env.github semantic-release --no-ci --dry-run",
+    "semantic-preview-ci": "env-cmd -f .env.github semantic-release --dry-run",
     "semantic-dev": "env-cmd -f .env.github semantic-release --no-ci",
     "semantic-ci": "semantic-release"
   },

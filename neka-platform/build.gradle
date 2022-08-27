@@ -1,7 +1,7 @@
 plugins {
     id "java-platform"
     id "maven"
-    id "org.springframework.boot" version "${springBootVersion}"
+    id "org.springframework.boot" version "${springBootVersion}" apply false
 }
 
 
@@ -18,10 +18,11 @@ dependencies {
         api("com.querydsl:querydsl-core:5.0.+",
             "com.querydsl:querydsl-jpa:5.0.+",
 
-            "io.jsonwebtoken:jjwt:0.9.1",
-            "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}",
-            "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
-            "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1",
+            // "io.jsonwebtoken:jjwt:0.9.1",
+            // "com.fasterxml.jackson.core:jackson-core:2.13.3",
+            // "com.fasterxml.jackson.core:jackson-databind:2.13.3",
+            // "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1",
+            // "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3",
 
 
             "org.apache.commons:commons-lang3:3.11",
@@ -29,7 +30,7 @@ dependencies {
             "org.apache.commons:commons-collections4:4.4",
 
             "javax.validation:validation-api:2.0.0.Final",
-            "org.projectlombok:lombok:${lombokVersion}")
+            "org.projectlombok:lombok:1.18.24")
     }
 
 }
