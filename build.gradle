@@ -3,12 +3,11 @@ wrapper { gradleVersion = '6.9.1' }
 ext {
     springBootVersion = "2.7.3"
 
-    nekaJwtVersion = "1.1.0"
-    nekaCommonVersion = "1.1.1"
+    nekaJwtVersion = "1.1.1"
+    nekaCommonVersion = "1.1.2"
     nekaBomVersion = "1.2.1"
-    nekaPlatformVersion = "1.0.1"
-    nekaServiceVersion = "1.1.0"
-    nekaDataJpaVersion = "1.1.1"
+    nekaServiceVersion = "1.1.1"
+    nekaDataJpaVersion = "1.1.2"
 }
 
 subprojects {
