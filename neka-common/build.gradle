@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation platform(project(":neka-platform"))
+    api platform(project(":neka-bom"))
 
     api "com.fasterxml.jackson.core:jackson-core"
     api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:"

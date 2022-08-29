@@ -1,12 +1,10 @@
 plugins {
     id "java-platform"
     id "maven"
-    id "com.palantir.git-version" version "0.13.0"
+    id "org.springframework.boot" version "${springBootVersion}" apply false
 }
-def details = versionDetails()
-version details.lastTag
 /*for local*/
-version "1.2.0"
+version "${nekaBomVersion}"
 
 javaPlatform {
     allowDependencies()
@@ -14,13 +12,32 @@ javaPlatform {
 
 
 dependencies {
-    api platform(project(":neka-platform"))
+    api platform(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+    // api platform(project(":neka-platform"))
 
     constraints {
+        api("com.querydsl:querydsl-core:5.0.0",
+            "com.querydsl:querydsl-jpa:5.0.0",
+
+            // "io.jsonwebtoken:jjwt:0.9.1",
+            // "com.fasterxml.jackson.core:jackson-core:2.13.3",
+            // "com.fasterxml.jackson.core:jackson-databind:2.13.3",
+            // "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1",
+            // "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.13.3",
+
+
+            "org.apache.commons:commons-lang3:3.11",
+            "org.apache.commons:commons-text:1.9",
+            "org.apache.commons:commons-collections4:4.4",
+
+            "javax.validation:validation-api:2.0.0.Final",
+            "org.projectlombok:lombok:1.18.24")
+
         api project(":neka-common")
         api project(":neka-service")
         api project(":neka-jpa")
         api project(":neka-jwt")
+
     }
 
     // constraints {

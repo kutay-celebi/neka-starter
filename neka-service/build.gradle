@@ -17,7 +17,7 @@ repositories {
 
 
 dependencies {
-    implementation platform(project(":neka-platform"))
+    api platform(project(":neka-bom"))
     implementation project(":neka-common")
 
     api group: 'org.springframework.boot', name: 'spring-boot-starter-web'
