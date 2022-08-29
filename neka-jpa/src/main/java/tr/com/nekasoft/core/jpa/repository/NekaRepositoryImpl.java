@@ -28,7 +28,7 @@ import tr.com.nekasoft.core.jpa.util.PageableConverter;
 
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -210,7 +210,7 @@ public class NekaRepositoryImpl<KE extends NekaEntity> extends SimpleJpaReposito
         boolean isExists = existsById(entity.getId());
         Assert.isTrue(isExists, "ENTITY VERITABANINDA YOK");
         entity.setDeleted(Boolean.TRUE);
-        entity.setDeletedAt(LocalDateTime.now());
+        entity.setDeletedAt(Instant.now());
         this.updateFlush(entity);
     }
 
@@ -247,7 +247,7 @@ public class NekaRepositoryImpl<KE extends NekaEntity> extends SimpleJpaReposito
         if (optional.isPresent()) {
             KE entity = optional.get();
             entity.setDeleted(Boolean.TRUE);
-            entity.setDeletedAt(LocalDateTime.now());
+            entity.setDeletedAt(Instant.now());
             delete(entity);
         } else {
             throw new EmptyResultDataAccessException(

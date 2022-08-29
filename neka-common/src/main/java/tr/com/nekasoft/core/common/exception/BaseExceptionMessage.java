@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 import java.util.UUID;
 
@@ -24,7 +24,7 @@ public class BaseExceptionMessage {
      * Exceptionun tarihidir.
      */
     @Builder.Default
-    private final LocalDateTime date = LocalDateTime.now();
+    private final Instant date = Instant.now();
     /**
      * Exceptionun kolay trace edilmesi amaciyla her bir exceptiona tekil bir numara verilir.
      */

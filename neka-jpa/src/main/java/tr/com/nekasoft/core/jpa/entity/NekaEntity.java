@@ -23,7 +23,7 @@ import javax.persistence.PreRemove;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 /**
  * @author Kutay Celebi
@@ -56,11 +56,11 @@ public class NekaEntity implements Serializable {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @LastModifiedDate
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     @LastModifiedBy
     @Column(name = "last_modified_by")
@@ -71,7 +71,7 @@ public class NekaEntity implements Serializable {
     private Long version;
 
     @Column(name = "DELETED_AT")
-    private LocalDateTime deletedAt;
+    private Instant deletedAt;
 
     @Column(name = "DELETED")
     @NotNull
@@ -90,6 +90,6 @@ public class NekaEntity implements Serializable {
     @PreRemove
     void preRemove() {
         this.deleted = Boolean.TRUE;
-        this.deletedAt = LocalDateTime.now();
+        this.deletedAt = Instant.now();
     }
 }

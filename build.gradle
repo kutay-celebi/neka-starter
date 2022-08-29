@@ -4,9 +4,9 @@ ext {
     springBootVersion = "2.7.+"
 
     nekaJwtVersion = "1.1.0"
-    nekaCommonVersion = "1.1.0"
+    nekaCommonVersion = "1.1.1"
     nekaServiceVersion = "1.1.0"
-    nekaDataJpaVersion = "1.1.0"
+    nekaDataJpaVersion = "1.1.1"
 }
 
 subprojects {
