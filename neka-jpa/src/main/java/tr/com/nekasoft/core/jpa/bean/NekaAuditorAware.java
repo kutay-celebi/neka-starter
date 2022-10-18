@@ -6,7 +6,7 @@ import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import tr.com.nekasoft.core.common.security.NekaPrincipalModel;
+import tr.com.nekasoft.core.common.security.NekaPrincipal;
 
 import java.util.Optional;
 
@@ -30,8 +30,8 @@ public class NekaAuditorAware implements AuditorAware<String> {
         }
 
         final Object principal = authentication.getPrincipal();
-        if (principal instanceof NekaPrincipalModel) {
-            final String userName = ((NekaPrincipalModel) principal).getUsername();
+        if (principal instanceof NekaPrincipal) {
+            final String userName = ((NekaPrincipal) principal).getUsername();
 
             if (userName == null) {
                 LOG.warn("Failed to get user information while registering...");

@@ -1,73 +1,46 @@
 package tr.com.nekasoft.core.jpa.bean;
 
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-import org.springframework.data.jpa.repository.support.JpaRepositoryFactory;
-import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
-import org.springframework.data.querydsl.SimpleEntityPathResolver;
+import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
+import org.springframework.data.repository.core.EntityInformation;
 import org.springframework.data.repository.core.RepositoryInformation;
 import org.springframework.data.repository.core.RepositoryMetadata;
-import org.springframework.data.repository.core.support.RepositoryComposition;
-import org.springframework.data.repository.core.support.RepositoryFragment;
-import tr.com.nekasoft.core.jpa.entity.NekaEntity;
+import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+import org.springframework.util.Assert;
 import tr.com.nekasoft.core.jpa.repository.NekaRepository;
 import tr.com.nekasoft.core.jpa.repository.NekaRepositoryImpl;
 
 import javax.persistence.EntityManager;
 
-/**
- * @author Kutay Celebi
- * @since 27.09.2019
- */
-public class NekaJpaRepositoryFactory<NE extends NekaEntity> extends JpaRepositoryFactory {
+public class NekaJpaRepositoryFactory extends RepositoryFactorySupport {
 
-    private final SimpleEntityPathResolver pathResolver = SimpleEntityPathResolver.INSTANCE;
     private final EntityManager em;
 
-    /**
-     * Creates a new {@link JpaRepositoryFactory}.
-     *
-     * @param entityManager must not be {@literal null}
-     */
-    public NekaJpaRepositoryFactory(EntityManager entityManager) {
-        super(entityManager);
-        this.setEntityPathResolver(pathResolver);
-        this.em = entityManager;
+    public NekaJpaRepositoryFactory(EntityManager em) {
+        this.em = em;
     }
 
     @Override
-    protected RepositoryComposition.RepositoryFragments getRepositoryFragments(RepositoryMetadata metadata) {
-        RepositoryComposition.RepositoryFragments fragments = RepositoryComposition.RepositoryFragments.empty();
-
-        boolean isNekaRepo = NekaRepository.class.isAssignableFrom(metadata.getRepositoryInterface());
-        if (isNekaRepo) {
-            JpaEntityInformation<NE, Object> entityInformation = getEntityInformation((Class<NE>) metadata.getDomainType());
-            NekaRepositoryImpl<NE> nekaRepository = new NekaRepositoryImpl<NE>(entityInformation, em);
-            fragments.append(RepositoryFragment.implemented(nekaRepository));
-        } else {
-            throw new UnsupportedOperationException("Neka Repository interface bulunamadi");
-        }
-        return fragments;
+    @SuppressWarnings("unchecked")
+    public <T, ID> EntityInformation<T, ID> getEntityInformation(Class<T> domainClass) {
+        return (JpaEntityInformation<T, ID>) JpaEntityInformationSupport.getEntityInformation(domainClass, em);
     }
 
     @Override
-    protected JpaRepositoryImplementation<?, String> getTargetRepository(RepositoryInformation information,
-            EntityManager entityManager) {
-        final JpaEntityInformation<NE, Object> entityInformation = getEntityInformation((Class<NE>) information.getDomainType());
-        final boolean isNekaRepo = NekaRepositoryImpl.class.isAssignableFrom(information.getRepositoryBaseClass());
-        if (isNekaRepo) {
-            return new NekaRepositoryImpl(entityInformation, entityManager);
-        } else {
-            throw new UnsupportedOperationException("Neka Repository interface bulunamadi");
-        }
+    protected NekaRepository<?> getTargetRepository(RepositoryInformation information) {
+        EntityInformation<?, Object> entityInformation = getEntityInformation(information.getDomainType());
+        NekaRepositoryImpl<?> repository = getTargetRepositoryViaReflection(information, entityInformation, em,
+                information.getDomainType());
+
+        Assert.isInstanceOf(NekaRepository.class, repository);
+
+        return repository;
     }
+
+
 
     @Override
     protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
-        final boolean isNekaRepo = NekaRepository.class.isAssignableFrom(metadata.getRepositoryInterface());
-        if (isNekaRepo) {
-            return NekaRepositoryImpl.class;
-        } else {
-            throw new UnsupportedOperationException("Neka Repository interface bulunamadi");
-        }
+        return NekaRepositoryImpl.class;
     }
 }

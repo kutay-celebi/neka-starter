@@ -5,7 +5,6 @@ import org.springframework.util.Assert;
 import tr.com.nekasoft.core.common.data.domain.NekaPage;
 
 import java.util.List;
-import java.util.function.LongSupplier;
 
 /**
  * @author Kutay Celebi
@@ -13,30 +12,30 @@ import java.util.function.LongSupplier;
  */
 public class ExecutionUtils {
 
-    public static <T> NekaPage<T> getPage(List<T> content, Pageable pageable, LongSupplier totalSupplier) {
+    public static <T> NekaPage<T> getPage(List<T> content, Pageable pageable, long count) {
 
         Assert.notNull(content, "Content must not be null!");
         Assert.notNull(pageable, "Pageable must not be null!");
-        Assert.notNull(totalSupplier, "TotalSupplier must not be null!");
+
 
         long currentLast = 0;
         long currentFirst = 0;
-        if (pageable.getPageNumber() == 0 && totalSupplier.getAsLong() > 0) {
-            // ilk sayfaysa
+        if (pageable.getPageNumber() == 0 && count > 0) {
+            // if it is first page
             currentFirst = 1;
             currentLast  = content.size();
-        } else if (totalSupplier.getAsLong() > 0) {
-            currentLast = (long) (pageable.getPageNumber() + 1) * pageable.getPageSize();
+        } else if (count > 0) {
+            currentLast  = (long) (pageable.getPageNumber() + 1) * pageable.getPageSize();
             currentFirst = currentLast - pageable.getPageSize() + 1;
         }
 
         int totalPages = pageable.getPageSize() == 0 ? 1 : (int) Math.ceil(
-                (double) totalSupplier.getAsLong() / (double) pageable.getPageSize());
+                (double) count / (double) pageable.getPageSize());
         if (pageable.getPageNumber() + 1 == totalPages) {
-            // son sayfa
+            // if it is last page
             currentLast = ((long) pageable.getPageNumber() * pageable.getPageSize()) + content.size();
         }
-        return new NekaPage<>(content, totalSupplier.getAsLong(), pageable.getPageSize(), totalPages, pageable.getPageNumber() + 1,
+        return new NekaPage<>(content, count, pageable.getPageSize(), totalPages, pageable.getPageNumber() + 1,
                 currentLast, currentFirst);
     }
 

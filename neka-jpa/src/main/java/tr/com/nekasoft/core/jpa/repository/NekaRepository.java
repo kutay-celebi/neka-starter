@@ -1,8 +1,11 @@
 package tr.com.nekasoft.core.jpa.repository;
 
+import com.querydsl.core.dml.UpdateClause;
+import com.querydsl.core.types.EntityPath;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.jpa.JPQLQuery;
 import com.querydsl.jpa.impl.JPAQuery;
-import org.springframework.data.jpa.repository.support.Querydsl;
+import com.querydsl.jpa.impl.JPAUpdateClause;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.Repository;
 import tr.com.nekasoft.core.common.data.domain.NekaPage;
@@ -10,6 +13,7 @@ import tr.com.nekasoft.core.common.data.domain.NekaQueryModel;
 import tr.com.nekasoft.core.jpa.entity.NekaEntity;
 
 import javax.persistence.EntityManager;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,49 +23,42 @@ import java.util.Optional;
  */
 @NoRepositoryBean
 public interface NekaRepository<KE extends NekaEntity> extends Repository<KE, String> {
-    <T> JPAQuery<T> getJpaQuery();
 
-    EntityManager getEntityManager();
-
-    Optional<KE> findById(String id);
+    void flush();
 
     KE saveFlush(KE entity);
 
-    List<KE> saveAllFlush(Iterable<KE> entities);
-
-    KE update(KE entity);
-
-    KE updateFlush(KE entity);
+    List<KE> saveAllFlush(Collection<KE> entities);
 
     void hardDelete(String id);
 
-    void hardDelete(Iterable<String> ids);
+    void hardDelete(Collection<String> ids);
+
+    void deleteAllByIds(Collection<String> ids);
+
+    void deleteById(String id);
 
     Optional<KE> findOne(Predicate predicate);
 
+    Optional<KE> findById(String id);
+
+    List<KE> findAll();
+
     NekaPage<KE> findAll(Predicate predicate, NekaQueryModel pageable);
 
-    <T> NekaPage<T>  applyPagination(NekaQueryModel queryModel, JPAQuery<T> query);
-
-    <T> NekaPage<T>  applyPaginationWithoutSort(NekaQueryModel queryModel, JPAQuery<T> query);
-
-    <T> NekaPage<T> applyCountPagination(NekaQueryModel queryModel, JPAQuery<T> query, JPAQuery<?> countQuery);
+    List<KE> findAllById(Collection<String> longs);
 
     long count(Predicate predicate);
 
     boolean exists(Predicate predicate);
 
-    List<KE> findAll();
+    <T> NekaPage<T> applyPagination(JPAQuery<T> query, NekaQueryModel queryModel);
 
-    void deleteAllByIds(String... ids);
+    <T> JPQLQuery<T> from(EntityPath<T> path);
 
-    void deleteAllByIdList(Iterable<String> ids);
+    <T> JPAQuery<T> getJpaQuery();
 
-    void deleteById(String id);
+    UpdateClause<JPAUpdateClause> updateClause(EntityPath<?> path);
 
-    void delete(KE entity);
-
-    Querydsl getQuerydsl();
-
-    Querydsl getRequiredQuerydsl();
+    EntityManager getEntityManager();
 }

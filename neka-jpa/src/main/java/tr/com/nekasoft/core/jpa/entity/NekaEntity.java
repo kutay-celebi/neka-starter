@@ -47,7 +47,7 @@ public class NekaEntity implements Serializable {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(name = "UUID", strategy = "uuid2")
-    @Column(name = "ID")
+    @Column(name = "id")
     private String id;
 
     @CreatedBy
@@ -70,10 +70,10 @@ public class NekaEntity implements Serializable {
     @Version
     private Long version;
 
-    @Column(name = "DELETED_AT")
+    @Column(name = "deleted_at")
     private Instant deletedAt;
 
-    @Column(name = "DELETED")
+    @Column(name = "deleted")
     @NotNull
     @Builder.Default
     private Boolean deleted = false;

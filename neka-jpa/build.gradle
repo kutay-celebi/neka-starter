@@ -27,16 +27,20 @@ dependencies {
 
     api "com.fasterxml.jackson.core:jackson-annotations"
 
-    annotationProcessor(
-            "com.querydsl:querydsl-apt:5.0.0:jpa",
-            [group: "org.hibernate.javax.persistence", name: "hibernate-jpa-2.1-api", version: "1.0.2.Final"],
-            [group: "javax.annotation", name: "javax.annotation-api", version: "1.3.2"]
-    )
-
     compileOnly "org.projectlombok:lombok"
     annotationProcessor "org.projectlombok:lombok:1.18.24"
+    annotationProcessor 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
+    annotationProcessor "javax.annotation:javax.annotation-api:1.3.2"
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
 
+    testCompileOnly "org.projectlombok:lombok"
+    testImplementation 'org.hamcrest:hamcrest-library:2.2'
     testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation 'com.h2database:h2'
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.24"
+    testAnnotationProcessor 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final'
+    testAnnotationProcessor "javax.annotation:javax.annotation-api:1.3.2"
+    testAnnotationProcessor "com.querydsl:querydsl-apt:5.0.0:jpa"
 }
 
 

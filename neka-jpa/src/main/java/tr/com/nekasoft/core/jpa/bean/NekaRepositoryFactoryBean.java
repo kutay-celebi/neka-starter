@@ -27,6 +27,4 @@ public class NekaRepositoryFactoryBean<R extends JpaRepository<KE, I>, KE extend
     protected RepositoryFactorySupport createRepositoryFactory(EntityManager entityManager) {
         return new NekaJpaRepositoryFactory(entityManager);
     }
-
-
 }
